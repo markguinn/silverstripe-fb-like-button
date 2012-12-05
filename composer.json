@@ -1,0 +1,18 @@
+{
+	"name": "markguinn/silverstripe-fb-like-button",
+	"description": "Super simple Silverstripe extension to add Facebook like buttons to pages.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "facebook", "like button"],
+	"authors": [
+		{
+			"name": "Mark Guinn",
+			"homepage": "http://github.com/markguinn",
+            "role": "Developer"
+		}
+	],
+
+	"require":
+	{
+		"silverstripe/framework": "3.*"
+	}
+}
