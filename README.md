@@ -3,10 +3,14 @@ SilverStripe Simple Facebook Like Button
 
 There are several other Facebook integration modules out there but I didn't find any
 that were just a really simple like button. This should be super easy to use and it
-integrates with the OpenGraph module <https://github.com/tractorcow/silverstripe-opengraph>.
+integrates with the OpenGraph module: <https://github.com/tractorcow/silverstripe-opengraph>.
 
 ## Requirements
 Silverstripe 3.0+
+
+## Maintainer
+Mark Guinn - markguinn@gmail.com
+Pull requests welcome.
 
 ## Installation
 Download this module into a folder in the root of your project. Does not require /dev/build.
@@ -26,6 +30,7 @@ be pulled from that, otherwise you'll need to set:
 FBLikeButtonExtension::$application_id = 'appidhere';
 ```
 
+Application ID's can be attained here: <https://developers.facebook.com/apps>
 Any changes to the default configuration can be made as follows:
 
 ```php
