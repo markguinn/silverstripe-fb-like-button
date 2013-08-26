@@ -10,7 +10,9 @@
             "role": "Developer"
 		}
 	],
-
+	"extra": {
+		"installer-name": "fb-like-button"
+	},
 	"require":
 	{
 		"silverstripe/framework": "3.*"
