@@ -3,6 +3,7 @@
 	"description": "Super simple Silverstripe extension to add Facebook like buttons to pages.",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "facebook", "like button"],
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Mark Guinn",

@@ -8,7 +8,7 @@
  */
 class FBLikeButtonExtension extends SiteTreeExtension
 {
-	public static $default_button_config = array(
+	private static $default_button_config = array(
 		'action'		=> 'like',
 		'colorscheme'	=> 'light',
 		'send'			=> 'false',
@@ -20,7 +20,7 @@ class FBLikeButtonExtension extends SiteTreeExtension
 	/**
 	 * @var static string - only needed if not using the silverstripe-opengraph module
 	 */
-	public static $application_id;
+	private static $application_id;
 
 
 	/**
@@ -30,7 +30,7 @@ class FBLikeButtonExtension extends SiteTreeExtension
 		if (class_exists('OpenGraph')) {
 			return OpenGraph::get_config('application');
 		} else {
-			return self::$application_id;
+			return Config::inst()->get('FBLikeButtonExtension', 'application_id');
 		}
 	}
 
@@ -39,10 +39,10 @@ class FBLikeButtonExtension extends SiteTreeExtension
 	 * @return array
 	 */
 	protected function getButtonConfig() {
-		$cfg = self::$default_button_config;
-
 		if ($this->getOwner()->hasMethod('getFBLikeButtonConfig')) {
 			$cfg = $this->getOwner()->getFBLikeButtonConfig();
+		} else {
+			$cfg = Config::inst()->get('FBLikeButtonExtension', 'default_button_config');
 		}
 
 		return $cfg;
@@ -75,12 +75,44 @@ HTML
 	 */
 	public function LikeButton() {
 		$cfg = $this->getButtonConfig();
+		if (!isset($cfg['href'])) $cfg['href'] = $this->getOwner()->AbsoluteLink();
+
 		$str = '<div class="fb-like"';
 		foreach ($cfg as $k => $v) {
 			$str .= ' data-' . str_replace('_', '-', $k) . '="' . Convert::raw2att($v) . '"';
 		}
 		$str .= '></div>';
+
 		return $str;
 	}
 
+	/**
+	 * Just an alternate template tag if you'd prefer more specificity
+	 * @return string
+	 */
+	public function FacebookLikeButton() {
+		return $this->LikeButton();
+	}
+
+
+	/**
+	 * Twitter sharing is so easy it doesn't even need it's own module, really
+	 * so I'm sticking this here in case it's helpful.
+	 * @return string
+	 */
+	public function TwitterShareButton() {
+		Requirements::customScript("!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');", 'twitterJS');
+		return '<a href="https://twitter.com/share" class="twitter-share-button" data-url="' . $this->getOwner()->AbsoluteLink() . '" data-text="' . Convert::raw2att($this->ShareText()) . '">Tweet</a>';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function ShareText() {
+		if ($this->getOwner()->hasMethod('getShareText')) {
+			return $this->getOwner()->getShareText();
+		} else {
+			return $this->getOwner()->Title;
+		}
+	}
 }
