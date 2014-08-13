@@ -28,7 +28,7 @@ class FBLikeButtonExtension extends SiteTreeExtension
 	 */
 	protected function getAppID() {
 		if (class_exists('OpenGraph')) {
-			return OpenGraph::get_config('application');
+			return OpenGraph::get_config('application_id');
 		} else {
 			return Config::inst()->get('FBLikeButtonExtension', 'application_id');
 		}
